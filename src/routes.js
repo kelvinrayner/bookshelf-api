@@ -1,4 +1,5 @@
-const {addBooks, getAllBooks, deleteSpecifiedBooks} = require('./handler');
+/* eslint-disable max-len */
+const {addBooks, getAllBooks, deleteSpecifiedBooks, getSpecifiedBooks} = require('./handler');
 
 const routes = [
   {
@@ -15,6 +16,11 @@ const routes = [
     method: 'DELETE',
     path: '/books/{id}',
     handler: deleteSpecifiedBooks,
+  },
+  {
+    method: 'GET',
+    path: '/books/{id}',
+    handler: getSpecifiedBooks,
   },
 ];
 

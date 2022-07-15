@@ -62,6 +62,28 @@ const getAllBooks = () => ({
   },
 });
 
+const getSpecifiedBooks = (request, h) => {
+  const {id} = request.params;
+
+  const book = books.filter((bk) => bk.id === id)[0];
+
+  if (book !== undefined) {
+    return {
+      status: 'success',
+      data: {
+        book,
+      },
+    };
+  }
+
+  const response = h.response({
+    status: 'fail',
+    message: 'Buku tidak ditemukan',
+  });
+  response.code(404);
+  return response;
+};
+
 const deleteSpecifiedBooks = (request, h) => {
   const {id} = request.params;
 
@@ -85,4 +107,4 @@ const deleteSpecifiedBooks = (request, h) => {
   return response;
 };
 
-module.exports = {addBooks, getAllBooks, deleteSpecifiedBooks};
+module.exports = {addBooks, getAllBooks, deleteSpecifiedBooks, getSpecifiedBooks};
