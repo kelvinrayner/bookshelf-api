@@ -6,7 +6,7 @@ const addBooks = (request, h) =>{
   const {name, year, author, summary, publisher, pageCount, readPage, reading} = request.payload;
 
   const id = nanoid(16);
-  const finished = false;
+  const finished = pageCount === readPage ? true : false;
   const insertedAt = new Date().toISOString();
   const updatedAt = insertedAt;
 
@@ -59,12 +59,16 @@ let specifiedDataBooks = books;
 const getAllBooks = (request, h) => {
   const {name, reading, finished} = request.query;
 
-  if (name !== undefined) {
+  if (name) {
     specifiedDataBooks = books.filter((b) => b.name.toUpperCase().includes(name.toUpperCase()));
-  } else if (reading !== undefined) {
-    specifiedDataBooks = books.filter((b) => b.reading === Boolean(reading));
-  } else if (finished !== undefined) {
-    specifiedDataBooks = books.filter((b) => b.finished === Boolean(finished));
+  }
+
+  if (reading) {
+    specifiedDataBooks = books.filter((b) => b.reading == Number(reading));
+  }
+
+  if (finished) {
+    specifiedDataBooks = books.filter((b) => b.finished == Number(finished));
   }
 
   const response = h.response({
